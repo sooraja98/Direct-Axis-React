@@ -4,20 +4,20 @@ import { Card, Button } from "react-bootstrap";
 import "./ProductListing.scss";
 import Navbar from "../Navbar/Navbar";
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
-}
+// interface Product {
+//   id: number;
+//   name: string;
+//   price: number;
+//   imageUrl: string;
+// }
 
-interface ProductListingProps {
-  products: Product[];
-}
+// interface ProductListingProps {
+//   products: Product[];
+// }
 
-const ProductListing: React.FC<ProductListingProps> = ({ products:Procut }) => {
+const ProductListing: React.FC = () => {
   // Dummy product data for the initial demo
-  const demoProducts: Product[] = [
+  const demoProducts = [
     {
       id: 1,
       name: "Product 1",
