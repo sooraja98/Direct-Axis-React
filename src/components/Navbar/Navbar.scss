@@ -1,95 +1,83 @@
-// Navbar.scss
 .main-navbar {
-    .top-row {
-      background-color: #2874f0;
-      color: #fff;
-      padding: 10px 0;
-  
-      .container {
-        max-width: 100%;
-        margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  .top-row {
+    background-color: #2874f0;
+    color: #fff;
+    padding: 10px 0;
+
+    .container {
+      max-width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .top-row-content {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
-  
-        .top-row-content {
+        width: 100%;
+
+        .logo {
+          font-size: 1.5rem;
+          font-weight: bold;
+          margin-bottom: 10px;
+          margin-left: 10px;
+
+          @media screen and (max-width: 768px) {
+            width: 100%;
+            text-align: center;
+            margin: 10px 0;
+          }
+        }
+
+        .search-bar {
           display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
+          margin: 0 20px;
+          flex-grow: 1;
           align-items: center;
-          width: 100%;
-  
-          .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            margin-left: 10px;
-          }
-  
-          .search-bar {
+          justify-content: center;
+      
+          input {
             display: flex;
-            margin: 0 20px;
-  
-            input {
-              padding: 16px;
-              border: none;
-              margin-right: 5px;
-              margin-top: 20px;
+            padding: 12px;
+            border: none;
+            margin-right: 5px;
+            margin-top: 15px;
+            width: 70%;
+            border-radius: 10px;
+      
+            @media screen and (max-width: 768px) {
+              margin: 0 auto;
               width: 100%; 
-              max-width: 650px; 
-            }
-  
-            button {
-              background-color: transparent;
-              border: none;
-              cursor: pointer;
-            }
-          }
-  
-          .icons {
-            display: flex;
-            align-items: center;
-  
-            .icon {
-              margin-right: 20px;
-  
-              i {
-                margin-right: 5px;
-              }
-            }
-  
-            .follow {
-              border: 1px solid #fff;
-              padding: 5px;
-              cursor: pointer;
             }
           }
         }
-      }
-    }
-  
-    .bottom-row {
-      background-color: #ddd;
-  
-      .container {
-        max-width: 100%;
-        margin: 0 auto;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-  
-        .category-list {
-          list-style: none;
+      
+
+        .icons {
           display: flex;
-          flex-wrap: wrap;
-          padding: 10px 0;
-  
-          li {
-            margin: 0 10px; // Adjust margin for smaller screens
+          align-items: center;
+          justify-content: center;
+
+          .icon {
+            margin-right: 20px;
+
+            i {
+              margin-right: 5px;
+            }
+          }
+
+          .follow {
+            border: 1px solid #fff;
+            padding: 5px;
             cursor: pointer;
           }
         }
       }
     }
   }
-  
+}

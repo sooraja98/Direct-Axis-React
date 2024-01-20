@@ -1,0 +1,31 @@
+// Main.scss
+.main-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar-container,
+.sidebar-container {
+  position: static; /* or position: relative; depending on your layout needs */
+}
+
+.content-container {
+  display: flex;
+  flex: 1;
+  overflow-y: auto;
+  padding-top: 70px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .content-container {
+    flex-direction: column;
+    padding-top: 0;
+  }
+
+  .navbar-container,
+  .sidebar-container {
+    width: 100%;
+  }
+}

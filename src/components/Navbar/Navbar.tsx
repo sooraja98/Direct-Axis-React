@@ -1,52 +1,44 @@
 // Navbar.tsx
-import React from 'react';
-import { Container, InputGroup, FormControl, Button } from 'react-bootstrap';
-import './Navbar.scss';
+import React, { useState } from "react";
+import { Container } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart, faHeart, faUser } from "@fortawesome/free-solid-svg-icons";
+import { useProductContext } from "../../context/ProductContext";
+import "./Navbar.scss";
 
 const Navbar: React.FC = () => {
+  const { searchProducts } = useProductContext();
+  const [search, setSearch] = useState("");
+
   return (
     <nav className="main-navbar">
-      {/* Top Row */}
       <div className="top-row">
         <Container>
           <div className="top-row-content">
             <div className="logo">ALL IN ONE</div>
             <div className="search-bar">
-              <InputGroup>
-                <FormControl placeholder="Search your product" />
-                <Button variant="light">
-                  <i className="fa fa-search"></i>
-                </Button>
-              </InputGroup>
+              <input
+                type="text"
+                placeholder="Search the product"
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  searchProducts(e.target.value);
+                }}
+              />
             </div>
             <div className="icons">
               <div className="icon">
-                <i className="fa fa-shopping-cart"></i>
-                <span>Cart (0)</span>
+                <FontAwesomeIcon icon={faShoppingCart} className="mobile-icon" />
               </div>
               <div className="icon">
-                <i className="fa fa-heart"></i>
-                <span>Wishlist (0)</span>
+                <FontAwesomeIcon icon={faHeart} className="mobile-icon" />
+              </div>
+              <div className="icon">
+                <FontAwesomeIcon icon={faUser} className="mobile-icon" />
               </div>
             </div>
           </div>
-        </Container>
-      </div>
-
-      {/* Bottom Row - Categories */}
-      <div className="bottom-row">
-        <Container>
-          <ul className="category-list">
-            <li>Home</li>
-            <li>All Categories</li>
-            <li>New Arrivals</li>
-            <li>Featured Products</li>
-            <li>Electronics</li>
-            <li>Fashions</li>
-            <li>Accessories</li>
-            <li>Home</li>
-            <li>Appliances</li>
-          </ul>
         </Container>
       </div>
     </nav>

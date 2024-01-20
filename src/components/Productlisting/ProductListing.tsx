@@ -1,101 +1,100 @@
-// ProductListing.tsx
+// ProductGrid.tsx
 import React from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Spinner, Alert } from "react-bootstrap";
+import { useProductContext } from "../../context/ProductContext";
 import "./ProductListing.scss";
-import Navbar from "../Navbar/Navbar";
 
-// interface Product {
-//   id: number;
-//   name: string;
-//   price: number;
-//   imageUrl: string;
-// }
+const ProductGrid: React.FC = () => {
+  const { products, loading, error, searchResults, fetchMoreProducts } =
+    useProductContext();
 
-// interface ProductListingProps {
-//   products: Product[];
-// }
+  if (loading) {
+    return (
+      <div className="loading-container text-center">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  }
 
-const ProductListing: React.FC = () => {
-  // Dummy product data for the initial demo
-  const demoProducts = [
-    {
-      id: 1,
-      name: "Product 1",
-      price: 19.99,
-      imageUrl: "https://via.placeholder.com/150",
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      price: 29.99,
-      imageUrl: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      price: 39.99,
-      imageUrl: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      price: 39.99,
-      imageUrl: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      price: 39.99,
-      imageUrl: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      price: 39.99,
-      imageUrl: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      price: 39.99,
-      imageUrl: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      price: 39.99,
-      imageUrl: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      price: 39.99,
-      imageUrl: "https://via.placeholder.com/150",
-    },
-  ];
+  if (error) {
+    return (
+      <div className="error-container text-center">
+        <Alert variant="danger">
+          <Alert.Heading>Error!</Alert.Heading>
+          <p>{error}</p>
+        </Alert>
+      </div>
+    );
+  }
+
+  if (!products.length && !searchResults.length) {
+    return (
+      <div className="no-data-container text-center">
+        <p>No data available.</p>
+      </div>
+    );
+  }
 
   return (
-    <>
-      <Navbar />
-
-      <div className="product-listing">
-        {demoProducts.map((product) => (
-          <Card key={product.id} className="product-card">
-            <Card.Img
-              variant="top"
-              src={product.imageUrl}
-              className="product-image"
-            />
-            <Card.Body>
-              <Card.Title>{product.name}</Card.Title>
-              <Card.Text>${product.price.toFixed(2)}</Card.Text>
-              <Button variant="primary">Add to Cart</Button>
-            </Card.Body>
-          </Card>
-        ))}
+    <div className="container">
+      <div className="product-grid">
+        {searchResults.length > 0
+          ? searchResults.map((product) => (
+              <div key={product.id} className="product-card">
+                <Card>
+                  <Card.Img
+                    variant="top"
+                    src={product.image}
+                    className="product-image"
+                  />
+                  <Card.Body>
+                    <Card.Title>{product.title}</Card.Title>
+                    <Card.Text>${product.price.toFixed(2)}</Card.Text>
+                    <Card.Text>Rating: {product.rating.rate}</Card.Text>
+                    <Button
+                      variant="primary"
+                      type="button"
+                      className="add-cart-button">
+                      Add to Cart
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </div>
+            ))
+          : products.map((product) => (
+              <div key={product.id} className="product-card">
+                <Card>
+                  <Card.Img
+                    variant="top"
+                    src={product.image}
+                    className="product-image"
+                  />
+                  <Card.Body>
+                    <Card.Title>{product.title}</Card.Title>
+                    <Card.Text>${product.price.toFixed(2)}</Card.Text>
+                    <Card.Text>Rating: {product.rating.rate}</Card.Text>
+                    <Button
+                      variant="primary"
+                      type="button"
+                      className="add-cart-button">
+                      Add to Cart
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </div>
+            ))}
       </div>
-    </>
+      {products.length > 0 && (
+        <div className="load-more-container">
+          <Button onClick={fetchMoreProducts} variant="primary">
+            Load More
+          </Button>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default ProductListing;
+export default ProductGrid;

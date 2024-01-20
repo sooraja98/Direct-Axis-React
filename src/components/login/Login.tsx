@@ -1,6 +1,6 @@
-// components/Auth/Login.tsx
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import "./Login.scss";
 
 const Login: React.FC = () => {
@@ -48,6 +48,11 @@ const Login: React.FC = () => {
                 className="login-button">
                 Login
               </Button>
+            </div>
+
+            {/* Add a Link to navigate to the registration page */}
+            <div className="form-group">
+              <Link to="/register">Don't have an account? Register here</Link>
             </div>
           </Form>
         </div>
