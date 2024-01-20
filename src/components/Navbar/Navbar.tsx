@@ -1,14 +1,28 @@
-// Navbar.tsx
 import React, { useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart, faHeart, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faShoppingCart,
+  faHeart,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+import { useNavigate, Link } from "react-router-dom";
 import { useProductContext } from "../../context/ProductContext";
+import Cookies from "js-cookie";
 import "./Navbar.scss";
 
 const Navbar: React.FC = () => {
   const { searchProducts } = useProductContext();
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Remove the user cookie
+    Cookies.remove("userEmail");
+
+    // Redirect to the login page
+    navigate("/");
+  };
 
   return (
     <nav className="main-navbar">
@@ -29,13 +43,26 @@ const Navbar: React.FC = () => {
             </div>
             <div className="icons">
               <div className="icon">
-                <FontAwesomeIcon icon={faShoppingCart} className="mobile-icon" />
+                <Link to="/cart">
+                  <FontAwesomeIcon
+                    icon={faShoppingCart}
+                    className="mobile-icon"
+                  />
+                </Link>
+              </div>
+
+              <div className="icon">
+                <Link to="/profile">
+                  <FontAwesomeIcon icon={faUser} className="mobile-icon" />
+                </Link>
               </div>
               <div className="icon">
-                <FontAwesomeIcon icon={faHeart} className="mobile-icon" />
-              </div>
-              <div className="icon">
-                <FontAwesomeIcon icon={faUser} className="mobile-icon" />
+                <Button
+                  variant="link"
+                  onClick={handleLogout}
+                  style={{ color: "white", backgroundColor: "red" }}>
+                  Logout
+                </Button>
               </div>
             </div>
           </div>

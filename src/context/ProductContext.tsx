@@ -26,6 +26,8 @@ interface ProductContextType {
   fetchCategoryProducts: (category: string) => void;
   sortProducts: (sortBy: string) => void;
   fetchMoreProducts: () => void;
+
+
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
@@ -125,6 +127,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     setSearchResults(filteredProducts);
   };
 
+
+
+
   useEffect(() => {
     fetchProducts();
   }, [limit]);
@@ -139,8 +144,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     fetchCategoryProducts,
     searchProducts,
     sortProducts,
-
     fetchMoreProducts,
+
   };
 
   return (

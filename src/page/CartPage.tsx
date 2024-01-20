@@ -1,16 +1,15 @@
+// CartPage.tsx
 import React, { useEffect } from "react";
-import Navbar from '../components/Navbar/Navbar'; 
-import Sidebar from "../components/sidebar/Sidebar"; 
-import ProductListing from "../components/Productlisting/ProductListing"; 
+import Navbar from "../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import "./Main.scss";
+import "./CartPage.scss";
+import Cart from "../components/cart/Cart";
 
-const Main: React.FC = () => {
+const CartPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if the cookie is present
     const userCookie = Cookies.get("userEmail");
 
     if (!userCookie) {
@@ -22,15 +21,12 @@ const Main: React.FC = () => {
     <div className="main-container">
       <div className="navbar-container">
         <Navbar />
-      </div>
-      <div className="content-container">
-        <div className="sidebar-container">
-          <Sidebar />
+        <div className="content-container">
+          <Cart />
         </div>
-        <ProductListing />
       </div>
     </div>
   );
 };
 
-export default Main;
+export default CartPage;

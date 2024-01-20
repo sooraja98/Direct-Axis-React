@@ -1,15 +1,34 @@
+// Login.tsx
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie"; 
 import "./Login.scss";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const navigate = useNavigate();
 
   const handleLogin = () => {
-    alert(email);
-    alert(password);
+    // Get the existing users from local storage or initialize an empty array
+    const existingUsersString = localStorage.getItem("users");
+    const existingUsers = existingUsersString ? JSON.parse(existingUsersString) : [];
+
+    // Check if the entered credentials match any user
+    const user = existingUsers.find((data) => data.email === email && data.password === password);
+
+    if (user) {
+      alert("Login successful!");
+
+      // Set a cookie with the user's email
+      Cookies.set("userEmail", email);
+
+      // Redirect to the main page
+      navigate("/main");
+    } else {
+      alert("Invalid email or password. Please try again.");
+    }
   };
 
   return (
@@ -45,7 +64,8 @@ const Login: React.FC = () => {
                 variant="primary"
                 type="button"
                 onClick={handleLogin}
-                className="login-button">
+                className="login-button"
+              >
                 Login
               </Button>
             </div>
