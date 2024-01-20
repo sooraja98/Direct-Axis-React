@@ -2,12 +2,14 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import "./Register.scss";
+import { useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const navigate=useNavigate()
 
   const handleRegister = () => {
     // Get the existing users from local storage or initialize an empty array
@@ -26,8 +28,12 @@ const Register: React.FC = () => {
 
     // Save the updated array of users to local storage
     localStorage.setItem("users", JSON.stringify(updatedUsers));
-
+    setName('')
+    setEmail('')
+    setPassword('')
+    setConfirmPassword('')
     alert("Registration successful!");
+    navigate('/')
   };
 
   return (

@@ -1,0 +1,26 @@
+.profile-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .profile-card {
+    max-width: 600px;
+    margin: auto;
+    margin-top: 20px;
+
+    .avatar {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      margin-right: 20px;
+    }
+
+    .profile-details {
+      h3 {
+        margin-bottom: 10px;
+      }
+
+ 
+    }
+  }
+}

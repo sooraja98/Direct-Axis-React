@@ -1,7 +1,8 @@
-
+// Import necessary libraries and types
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
+// Define the structure of a product
 interface Product {
   id: number;
   title: string;
@@ -15,6 +16,7 @@ interface Product {
   };
 }
 
+// Define the structure of the Product Context
 interface ProductContextType {
   products: Product[];
   searchResults: Product[];
@@ -24,17 +26,18 @@ interface ProductContextType {
   fetchProducts: () => void;
   searchProducts: (query: string) => void;
   fetchCategoryProducts: (category: string) => void;
-  sortProducts: (sortBy: string) => void;
+  sortProducts: (sortBy: string, sortOrder?: string) => void;
   fetchMoreProducts: () => void;
-
-
 }
 
+// Create a Product Context with its initial value as undefined
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
+// ProductProvider component responsible for managing product-related state and actions
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  // State variables for products, loading status, error message, search results, current category, and limit
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,6 +45,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
   const [currentCategory, setCurrentCategory] = useState<string | null>(null);
   const [limit, setLimit] = useState<number>(5);
 
+  // Function to fetch all products
   const fetchProducts = async () => {
     setLoading(true);
     try {
@@ -58,6 +62,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  // Function to fetch more products
   const fetchMoreProducts = async () => {
     setLoading(true);
     try {
@@ -78,7 +83,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
       setLoading(false);
     }
   };
-  
+
+  // Function to fetch products based on a specific category
   const fetchCategoryProducts = async (category: string) => {
     setLoading(true);
     try {
@@ -93,6 +99,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
       setLoading(false);
     }
   };
+
+  // Function to sort products based on a specific criteria and order
   const sortProducts = (sortBy: string, sortOrder: string = "asc") => {
     setLoading(true);
     try {
@@ -118,8 +126,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
       setLoading(false);
     }
   };
-  
 
+  // Function to search products based on a query
   const searchProducts = (query: string) => {
     const filteredProducts = products.filter((product) =>
       product.title.toLowerCase().includes(query.toLowerCase())
@@ -127,13 +135,12 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     setSearchResults(filteredProducts);
   };
 
-
-
-
+  // useEffect to fetch products when the component mounts and when the limit changes
   useEffect(() => {
     fetchProducts();
   }, [limit]);
 
+  // Create the context value
   const contextValue: ProductContextType = {
     products,
     searchResults,
@@ -145,9 +152,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     searchProducts,
     sortProducts,
     fetchMoreProducts,
-
   };
 
+  // Provide the context value to the context provider
   return (
     <ProductContext.Provider value={contextValue}>
       {children}
@@ -155,6 +162,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
+// Custom hook to use the Product Context
 export const useProductContext = (): ProductContextType => {
   const context = useContext(ProductContext);
   if (!context) {

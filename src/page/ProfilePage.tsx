@@ -4,9 +4,9 @@ import Navbar from "../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom"; 
 import Cookies from "js-cookie"; 
 import "./CartPage.scss"; 
-import Cart from "../components/cart/Cart"; 
+import Profile from "../components/profile/Profile";
 
-const CartPage: React.FC = () => {
+const ProfilePage: React.FC = () => {
   const navigate = useNavigate(); 
 
   // useEffect hook to check if the user is authenticated (has a valid user cookie)
@@ -24,10 +24,10 @@ const CartPage: React.FC = () => {
       <div className="navbar-container">
         <Navbar /> 
         <div className="content-container">
-          <Cart /> 
+          <Profile /> 
         </div>
       </div>
     </div>
   );
 };
-export default CartPage;
+export default ProfilePage;
