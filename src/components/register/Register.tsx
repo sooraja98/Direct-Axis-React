@@ -1,6 +1,6 @@
-// Register.tsx
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import Joi from "joi"; // Import Joi
 import "./Register.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -9,31 +9,43 @@ const Register: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const handleRegister = () => {
-    // Get the existing users from local storage or initialize an empty array
+    // Define a Joi schema for validation
+    const schema = Joi.object({
+      name: Joi.string().required(),
+      email: Joi.string().email({ tlds: { allow: false } }).required(),
+      password: Joi.string().min(6).required(),
+      confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
+    });
+
+    // Validate the input data against the schema
+    const { error } = schema.validate({ name, email, password, confirmPassword });
+
+    if (error) {
+      alert(error.details[0].message);
+      return;
+    }
+
     const existingUsersString = localStorage.getItem("users");
     const existingUsers = existingUsersString ? JSON.parse(existingUsersString) : [];
 
-    // Check if the email is already registered
-    if (existingUsers.some((user) => user.email === email)) {
+    if (existingUsers.some((user: { email: string }) => user.email === email)) {
       alert("Email is already registered. Please choose a different email.");
       return;
     }
 
-    // Add the new user to the array
     const newUser = { name, email, password };
     const updatedUsers = [...existingUsers, newUser];
 
-    // Save the updated array of users to local storage
     localStorage.setItem("users", JSON.stringify(updatedUsers));
-    setName('')
-    setEmail('')
-    setPassword('')
-    setConfirmPassword('')
+    setName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
     alert("Registration successful!");
-    navigate('/')
+    navigate("/");
   };
 
   return (

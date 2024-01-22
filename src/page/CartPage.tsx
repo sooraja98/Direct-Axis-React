@@ -9,11 +9,9 @@ import Cart from "../components/cart/Cart";
 const CartPage: React.FC = () => {
   const navigate = useNavigate(); 
 
-  // useEffect hook to check if the user is authenticated (has a valid user cookie)
-  useEffect(() => {
-    const userCookie = Cookies.get("userEmail"); // Retrieve user email from cookie
+ useEffect(() => {
+    const userCookie = Cookies.get("userEmail");
 
-    // If no user cookie is found, navigate the user to the login page
     if (!userCookie) {
       navigate("/");
     }

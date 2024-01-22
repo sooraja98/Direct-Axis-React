@@ -7,23 +7,20 @@ interface UserProfile {
   name: string;
   email: string;
   password: string;
-  avatarSrc?: string; // Add the avatarSrc property if it exists in your user data
+  avatarSrc?: string; 
 }
 
 const Profile: React.FC = () => {
   const [userProfiles, setUserProfiles] = useState<UserProfile[]>([]);
 
   useEffect(() => {
-    // Get user email from the cookie
     const userEmail = document.cookie.replace(/(?:(?:^|.*;\s*)userEmail\s*=\s*([^;]*).*$)|^.*$/, "$1");
 
-    // Retrieve user profiles from local storage
     const storedUsers = localStorage.getItem("users");
 
     if (storedUsers) {
       const parsedUsers: UserProfile[] = JSON.parse(storedUsers);
 
-      // Filter user profiles based on the matched email
       const matchedUsers = parsedUsers.filter((user) => user.email === userEmail);
 
       setUserProfiles(matchedUsers);

@@ -9,12 +9,9 @@ import "./Main.scss";
 const Main: React.FC = () => {
   const navigate = useNavigate();
 
-  // useEffect hook to check if the user is authenticated (has a valid user cookie)
   useEffect(() => {
-    // Check if the user cookie is present
     const userCookie = Cookies.get("userEmail");
 
-    // If no user cookie is found, navigate the user to the login page
     if (!userCookie) {
       navigate("/");
     }

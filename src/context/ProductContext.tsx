@@ -1,8 +1,7 @@
-// Import necessary libraries and types
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-// Define the structure of a product
+// the structure of a product
 interface Product {
   id: number;
   title: string;
@@ -16,7 +15,7 @@ interface Product {
   };
 }
 
-// Define the structure of the Product Context
+//the structure of the Product Context
 interface ProductContextType {
   products: Product[];
   searchResults: Product[];
@@ -30,7 +29,7 @@ interface ProductContextType {
   fetchMoreProducts: () => void;
 }
 
-// Create a Product Context with its initial value as undefined
+// Product Context with its initial value as undefined
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 // ProductProvider component responsible for managing product-related state and actions
@@ -54,9 +53,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
       );
       setProducts(response.data);
       setSearchResults(response.data);
-      setCurrentCategory(null); // Reset current category when fetching all products
+      setCurrentCategory(null);
     } catch (error) {
-      setError("Error fetching products");
+      setError("Error fetching products"+error);
     } finally {
       setLoading(false);
     }
@@ -104,7 +103,6 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
   const sortProducts = (sortBy: string, sortOrder: string = "asc") => {
     setLoading(true);
     try {
-      // Create a copy of the current searchResults to avoid mutating the state directly
       const sortedResults = [...searchResults];
   
       // Sort the products based on the selected criteria
